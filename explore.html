@@ -16,7 +16,6 @@
         .explore-card { background: var(--card-bg); padding: 25px; border-radius: var(--border-radius); box-shadow: 0 10px 25px rgba(58, 53, 48, 0.04); border: 1px solid rgba(210, 205, 195, 0.3); margin-bottom: 25px; }
         .card-title { font-size: 1.15rem; color: var(--forest-dark); margin-bottom: 15px; font-weight: 600; border-bottom: 2px solid #edebe6; padding-bottom: 6px; }
         .item { margin-bottom: 15px; }
-        .item-meta { font-size: 0.85rem; color: var(--sea-color); font-weight: 600; }
         .item-name { font-weight: 600; font-size: 0.98rem; margin: 2px 0; }
         .item-desc { font-size: 0.88rem; color: var(--text-muted); }
     </style>
@@ -36,7 +35,6 @@
                 const grid = document.getElementById('explore-grid');
                 grid.innerHTML = '';
                 
-                // 将数据按类别临时存在对象里
                 let categories = {};
                 lines.forEach(line => {
                     const parts = line.split('|').map(p => p.trim());
