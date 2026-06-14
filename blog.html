@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>思想海域 - 碎碎念</title>
+    <style>
+        :root { --bg-color: #f5f3ef; --card-bg: #ffffff; --text-main: #3a3530; --text-muted: #7a7570; --forest-dark: #1e3f20; --sea-color: #2a6f97; --border-radius: 16px; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; background-color: var(--bg-color); color: var(--text-main); line-height: 1.7; padding: 40px 20px; }
+        .container { max-width: 650px; margin: 0 auto; }
+        .back-link { display: inline-block; color: var(--sea-color); text-decoration: none; font-size: 0.95rem; font-weight: 600; margin-bottom: 25px; }
+        h1 { font-size: 1.8rem; color: var(--forest-dark); margin-bottom: 20px; }
+        .card { background: var(--card-bg); padding: 30px; border-radius: var(--border-radius); box-shadow: 0 10px 25 rgba(58,53,48,0.04); border: 1px solid rgba(210,205,195,0.3); }
+        .thought-stream { display: flex; flex-direction: column; gap: 25px; }
+        .thought-node { padding-bottom: 20px; border-bottom: 1px solid #edebe6; }
+        .thought-node:last-child { border-bottom: none; padding-bottom: 0; }
+        .meta { font-size: 0.85rem; color: var(--sea-color); font-weight: 600; margin-bottom: 6px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← 返回主页</a>
+        <div class="card">
+            <h1>🌊 思想海域 · 碎碎念</h1>
+            <div id="thought-container" class="thought-stream">正在读取文字流...</div>
+        </div>
+    </div>
+    <script>
+        async function loadThoughts() {
+            try {
+                const response = await fetch('thoughts.txt');
+                const text = await response.text();
+                const lines = text.split('\n').filter(line => line.trim() !== '');
+                const container = document.getElementById('thought-container');
+                container.innerHTML = '';
+                
+                lines.forEach(line => {
+                    const parts = line.split('|').map(p => p.trim());
+                    if (parts.length >= 3) {
+                        container.innerHTML += `
+                            <div class="thought-node">
+                                <div class="meta">📅 ${parts[0]} · ${parts[1]}</div>
+                                <div>${parts[2]}</div>
+                            </div>`;
+                    }
+                });
+            } catch(e) { container.innerText = '加载失败。'; }
+        }
+        loadThoughts();
+    </script>
+</body>
+</html>

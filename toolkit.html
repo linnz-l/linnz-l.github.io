@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的 Toolkit - 资源仓库</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; background-color: #f5f3ef; color: #3a3530; line-height: 1.6; padding: 40px 20px; }
+        .container { max-width: 700px; margin: 0 auto; }
+        .back-link { display: inline-block; color: #2a6f97; text-decoration: none; font-size: 0.95rem; font-weight: 600; margin-bottom: 25px; }
+        h1 { font-size: 1.8rem; color: #1e3f20; margin-bottom: 10px; }
+        .subtitle { color: #7a7570; font-size: 0.9rem; margin-bottom: 25px; }
+        .card { background: #ffffff; padding: 30px; border-radius: 16px; box-shadow: 0 10px 25px rgba(58, 53, 48, 0.04); border: 1px solid rgba(210, 205, 195, 0.3); }
+        .tool-list { display: flex; flex-direction: column; gap: 20px; }
+        .tool-item { display: flex; justify-content: space-between; align-items: center; padding-bottom: 15px; border-bottom: 1px solid #edebe6; }
+        .tool-item:last-child { border-bottom: none; padding-bottom: 0; }
+        .tool-info { display: flex; flex-direction: column; padding-right: 15px;}
+        .tool-name { font-weight: 600; font-size: 1.05rem; color: #1e3f20; }
+        .tool-desc { font-size: 0.88rem; color: #7a7570; margin-top: 2px; }
+        .download-btn { background-color: #2a6f97; color: white; text-decoration: none; padding: 6px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: 500; white-space: nowrap; }
+        .download-btn:hover { background-color: #1e3f20; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← 返回主页</a>
+        <div class="card">
+            <h1>🛠️ 我的 Toolkit 资源包</h1>
+            <div class="subtitle">这里存放着我整理和上传的各种实用资源，欢迎按需获取：</div>
+            <div id="tools-container" class="tool-list">正在开启背包...</div>
+        </div>
+    </div>
+    <script>
+        async function loadToolkit() {
+            try {
+                const response = await fetch('toolkit.txt');
+                const text = await response.text();
+                const lines = text.split('\n').filter(line => line.trim() !== '');
+                const container = document.getElementById('tools-container');
+                container.innerHTML = '';
+                
+                lines.forEach(line => {
+                    const parts = line.split('|').map(p => p.trim());
+                    if (parts.length >= 3) {
+                        container.innerHTML += `
+                            <div class="tool-item">
+                                <div class="tool-info">
+                                    <span class="tool-name">${parts[0]}</span>
+                                    <span class="tool-desc">${parts[1]}</span>
+                                </div>
+                                <a href="${parts[2]}" target="_blank" class="download-btn">点击获取</a>
+                            </div>`;
+                    }
+                });
+            } catch(e) { container.innerText = '资源加载失败。'; }
+        }
+        loadToolkit();
+    </script>
+</body>
+</html>
