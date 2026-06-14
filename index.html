@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的个人主页</title>
+    <style>
+        /* 全局样式重置与【Land, Sea, Forest】主题变量 */
+        :root {
+            /* Land (大地): 温暖的沙滩米白与岩石底色 */
+            --bg-color: #f5f3ef;       /* 浅沙色，比纯白更温柔护眼 */
+            --card-bg: #ffffff;        /* 纯白卡片，形成对比 */
+            --text-main: #3a3530;      /* 深原木色，代替死板的纯黑 */
+            --text-muted: #7a7570;     /* 泥土灰，用于次要文字 */
+            
+            /* Forest (森林): 葱郁、深邃的植被绿 */
+            --forest-dark: #1e3f20;    /* 深林绿 */
+            --forest-light: #3b6e4c;   /* 丛林绿 */
+            --forest-gradient: linear-gradient(135deg, #1e3f20 0%, #3b6e4c 100%);
+            
+            /* Sea (海洋): 远洋蓝与清澈的浪花蓝 */
+            --sea-color: #2a6f97;      /* 纯净海蓝 */
+            --sea-light: #e1f1f6;      /* 浅海蓝浪花色 */
+            
+            --border-radius: 16px;
+            --shadow: 0 10px 25px rgba(58, 53, 48, 0.04); /* 基于大地色的柔和阴影 */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+        }
+
+        /* 头部个人介绍卡片 - Forest 主题 */
+        header {
+            background: var(--forest-gradient);
+            color: #f5f3ef;
+            padding: 40px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 15px 35px rgba(30, 63, 32, 0.15);
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 模拟自然的阳光洒在森林里的光晕效果 */
+        header::after {
+            content: "";
+            position: absolute;
+            top: -60%;
+            right: -20%;
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, rgba(245, 243, 239, 0.15) 0%, rgba(255,255,255,0) 70%);
+            border-radius: 50%;
+        }
+
+        .profile-info h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            color: #ffffff;
+        }
+
+        .profile-info .tagline {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 20px;
+            color: #d1e2d3; /* 淡绿叶色 */
+        }
+
+        .bio {
+            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.08);
+            padding: 15px 20px;
+            border-radius: 8px;
+            backdrop-filter: blur(5px);
+            border-left: 4px solid #a3c4bc; /* 浅苔绿 */
+        }
+
+        /* 两栏布局 (简历 vs 碎碎念) */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* 通用卡片样式 - Land 基底 */
+        .card {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+            border: 1px solid rgba(210, 205, 195, 0.3);
+        }
+
+        h2 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: var(--forest-dark);
+            position: relative;
+            padding-left: 14px;
+        }
+
+        /* 标题左侧小横条 - Sea 点缀 */
+        h2::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 4px;
+            width: 4px;
+            height: 18px;
+            background: var(--sea-color);
+            border-radius: 2px;
+        }
+
+        /* 简历版块样式 - Sea / Land 结合 */
+        .resume-item {
+            margin-bottom: 25px;
+            position: relative;
+            padding-left: 15px;
+            border-left: 2px solid #e8e5e0;
+        }
+
+        .resume-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .resume-date {
+            font-size: 0.85rem;
+            color: var(--sea-color);
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .resume-title {
+            font-weight: 600;
+            font-size: 1.05rem;
+            color: var(--text-main);
+        }
+
+        .resume-desc {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-top: 5px;
+        }
+
+        /* 技能标签 - Forest 绿 */
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .skill-tag {
+            background: #eef4f0; /* 极浅草绿 */
+            color: var(--forest-light);
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .skill-tag:hover {
+            background: var(--forest-light);
+            color: white;
+        }
+
+        /* 碎碎念版块样式 - 温暖溪流感 */
+        .thought-item {
+            background: #fbfbfa;
+            padding: 18px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #edebe6;
+        }
+
+        .thought-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .thought-meta {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .thought-content {
+            font-size: 0.95rem;
+            color: var(--text-main);
+            white-space: pre-line;
+        }
+
+        /* 页脚 */
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- 个人介绍头部 (Forest 森林意象) -->
+    <header>
+        <div class="profile-info">
+            <h1>你好吗，我是Linn 🌲</h1>
+            <div class="tagline">游走于代码森林与现实大地之间的 终身学习者</div>
+            <div class="bio">
+                这里是我的个人数字岛屿。我喜欢像树木一样扎根沉淀技术，像海洋一样保持开放与好奇，像大地一样踏实生活。欢迎来到我的碎碎念自留地。
+            </div>
+        </div>
+    </header>
+
+    <!-- 主体两栏布局 -->
+    <div class="main-content">
+        
+        <!-- 左栏：个人经历 & 技能 (Land & Sea 意象) -->
+        <div class="left-col">
+            <div class="card">
+                <h2>🧭 探索足迹</h2>
+                
+                <div class="resume-item">
+                    <div class="resume-date">2024 - 至今</div>
+                    <div class="resume-title">独立开发者 / 设计爱好者</div>
+                    <div class="resume-desc">构建向内探索的个人项目，专注于干净的代码、好用的产品与克制的视觉表达。</div>
+                </div>
+
+                <div class="resume-item">
+                    <div class="resume-date">2022 - 2024</div>
+                    <div class="resume-title">某互联网团队 / 核心研发</div>
+                    <div class="resume-desc">在团队中负责前端架构，像治理生态一样维护项目的组件库与性能优化。</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>🛠️ 工具背包</h2>
+                <div class="skills">
+                    <span class="skill-tag">HTML5 / CSS3</span>
+                    <span class="skill-tag">JavaScript / TS</span>
+                    <span class="skill-tag">React / Vue</span>
+                    <span class="skill-tag">Node.js</span>
+                    <span class="skill-tag">UI / UX Design</span>
+                    <span class="skill-tag">Git & GitHub</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 右栏：碎碎念版块 (Sea & Land 意象) -->
+        <div class="right-col">
+            <div class="card" style="height: 100%;">
+                <h2>🌊 思想碎碎念</h2>
+                
+                <div class="thought-item">
+                    <div class="thought-meta">
+                        <span>📅 2026-06-14</span>
+                        <span>📍 窗边</span>
+                    </div>
+                    <div class="thought-content">终于把 GitHub Pages 部署好了。配合这个“Land, Sea, Forest”的自然系配色，感觉整个网页都呼吸了起来，真治愈啊。☕</div>
+                </div>
+
+                <div class="thought-item">
+                    <div class="thought-meta">
+                        <span>📅 2026-06-10</span>
+                        <span>📍 公园散步</span>
+                    </div>
+                    <div class="thought-content">今天抬头看树叶的缝隙，阳光漏下来的样子特别像某种随机数算法。大自然才是最顶级的设计师。</div>
+                </div>
+
+                <div class="thought-item">
+                    <div class="thought-meta">
+                        <span>📅 2026-05-28</span>
+                        <span>📍 书房</span>
+                    </div>
+                    <div class="thought-content">把生活节奏慢下来，像树木一样向下扎根。不要焦虑一时的得失，输入和思考都是在为未来积蓄能量。</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 页脚 -->
+    <footer>
+        <p>© 2026 Linn. Inspired by Land, Sea, and Forest.</p>
+    </footer>
+</div>
+
+</body>
+</html>
